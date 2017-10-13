@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>SCADA System</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="text-white">SCADA System</h1>
+        </header>
+        <nav class="menu">
+            <button type="button" class="btn btn-menu" data-toggle="modal" data-target="#exampleModal">Información</button>
+        </nav>
+
+        <center>
+            <div class="card cards control-cards">
+                <ul class="list-group list-group-flush">
+                    <center>
+                        <li class="list-group-item"><h3>Controles</h3></li>
+                    </center>
+                </ul>
+                <div class="card-body card-content">
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <button type="button" id="ledRojo" class="luz luz-off-red" onclick="toggleLedRed()"></button>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">LED Digital Rojo</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <button type="button" id="ledAmarillo" class="luz luz-off-yellow" onclick="toggleLedYellow()"></button>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">LED Digital Amarillo</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <button type="button" id="ledVerde" class="luz luz-off-green" onclick="toggleLedGreen()"></button>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">LED Digital Verde</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body-range">
+                            <div id="txtValueLedR" class="value">0</div>
+                            <input type="range" id="pot1" onmouseup="sendValuePot1()" oninput="changeValuePot1()" min="0" max="255" step="1" value="0">
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">LED Analógico Rojo</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body-range">
+                            <div id="txtValueLedA" class="value">0</div>
+                            <input type="range" id="pot2" onmouseup="sendValuePot2()" oninput="changeValuePot2()" min="0" max="255" step="1" value="0">
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">LED Analógico Amarillo</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body-range">
+                            <div id="txtValueLedV" class="value">0</div>
+                            <input type="range" id="pot3" onmouseup="sendValuePot3()" oninput="changeValuePot3()" min="0" max="255" step="1" value="0">
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">LED Analógico Verde</li>
+                            </center>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card cards estado-cards">
+                <ul class="list-group list-group-flush">
+                    <center>
+                        <li class="list-group-item"><h3>Estado de Controles</h3></li>
+                    </center>
+                </ul>
+                <div class="card-body card-content">
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <input type="checkbox" id="switch1" />
+                            <label for="checkbox1"></label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Switch 1</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <input type="checkbox" id="switch2" />
+                            <label for="checkbox2"></label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Switch 2</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <input type="checkbox" id="switch3" />
+                            <label for="checkbox3"></label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Switch 3</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <input type="checkbox" id="switch4" />
+                            <label for="checkbox4"></label>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Switch 4</li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <div class="progress">
+                                <div id="pb1" class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Potenciometro 1: <span id="txtValuePot1">0</span></li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <div class="progress">
+                                <div id="pb2" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Potenciometro 2: <span id="txtValuePot2">0</span></li>
+                            </center>
+                        </ul>
+                    </div>
+                    <div class="card card-item">
+                        <div class="card-item-body">
+                            <div class="progress">
+                                <div id="pb3" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <center>
+                                <li class="list-group-item">Potenciometro 3: <span id="txtValuePot3">0</span></li>
+                            </center>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </center>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SCADA System</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <center>
+                    <b>Autores:</b><br />
+                    Martín Alejandro Pérez Güendulain<br />
+                    Ángel Roberto Móntez Murgas<br />
+                    <br />
+                    <b>Materia:</b><br />
+                    Microcontroladores<br />
+                    <br />
+                    <b>Porfesor:</b><br />
+                    Dr. Hugo Ramírez Leyva<br />
+                <center>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-menu" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script src="/js/jquery-3.2.1.slim.min.js"></script>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/srSocket.js" charset="utf-8"></script>
+        <script src="/js/main.js" charset="utf-8"></script>
+    </body>
+</html>
